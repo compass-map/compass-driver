@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body { background: #1a1a1a; color: #eee; font-family: sans-serif; padding: 10px; }
+        .box { background: #333; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+        .hero { color: gold; font-weight: bold; }
+        button { background: #444; border: 1px solid #777; color: white; padding: 10px; margin: 5px; border-radius: 5px; }
+        .card { display: inline-block; padding: 10px; background: #555; margin: 5px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h3>🏰 领主模拟器</h3>
+    <div class="box">金币: <span id="gold">100</span> | 城堡等级: <span id="castle">1</span></div>
+    
+    <div id="hero-zone" class="box">英雄: <span id="hero-name" class="hero">无</span></div>
+    
+    <div class="box">
+        <div id="cards">卡牌: </div>
+    </div>
 
+    <button onclick="upgrade()">升级城堡 (100金)</button>
+    <button onclick="drawCard()">抽取卡牌 (20金)</button>
+    <button onclick="battle()">发起战争</button>
+
+    <script>
+        let state = { gold: 100, castle: 1, hero: "骑士", deck: ["强攻", "防御", "募兵"] };
+        function update() {
+            document.getElementById('gold').innerText = state.gold;
+            document.getElementById('castle').innerText = state.castle;
+            document.getElementById('hero-name').innerText = state.hero;
+            document.getElementById('cards').innerText = state.deck.join(" | ");
+        }
+        function upgrade() {
+            if(state.gold >= 100) { state.gold -= 100; state.castle++; update(); alert("城堡升级！"); }
+        }
+        function drawCard() {
+            if(state.gold >= 20) { state.gold -= 20; state.deck.push("战术卡"); update(); }
+        }
+        function battle() {
+            let win = Math.random() > 0.4;
+            if(win) { state.gold += 50; alert("战争胜利！获得50金"); } else { alert("战败，损失惨重！"); state.gold -= 30; }
+            update();
+        }
+        update();
+    </script>
+</body>
+</html>
+					
